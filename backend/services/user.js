@@ -2,7 +2,7 @@ const db = require('./dbConnect');
 const UserService = {};
 module.exports = UserService;
 
-UserService.createUser = ({name, email, cash}) =>{
+UserService.create = ({name, email, cash}) =>{
     const sql = `
         INSERT INTO users 
         (name, email, cash) 
