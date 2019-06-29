@@ -16,8 +16,8 @@ const port = 5555;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/stocks', stockRouter);
-app.use('/transactions', transactionRouter);
+app.use('/stock', stockRouter);
+app.use('/transaction', transactionRouter);
 app.use('/user', userRouter);
 
 // TEST ROUTE
