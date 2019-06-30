@@ -1,0 +1,36 @@
+/* #00F2C6 */
+.login-form {
+    background-color: #26508C;
+    border: 3px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    width: 40%;
+    margin: auto;
+    padding: 20px;
+    margin-top: 30px;
+}
+.full-row {
+    width: 100%;
+}
+.space {
+    margin: 10px 0px;
+}
+.text-center {
+    text-align: center;
+}
+.white {
+    color: white;
+}
+.input {
+    padding: 10px;
+    font-size: 20pt;
+}
+.button {
+    font-size: 20pt;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
