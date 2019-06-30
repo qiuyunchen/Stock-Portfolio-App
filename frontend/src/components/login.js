@@ -31,7 +31,7 @@ export default class Login extends React.Component {
 
         return (<>
         
-        <form className='login-form'>
+        <form className='signup-login-form'>
             <h1 className='full-row text-center white'>Welcome back!</h1>
 
             <input 
