@@ -1,0 +1,25 @@
+.nav {
+    background-color: #26508C;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px;
+}
+.app-title{
+    font-size: 25pt;
+}
+.nav-list {
+    display: flex;
+    min-width: 25%;
+    font-size: 20pt;
+    justify-content: space-around;
+    font-weight: 500;
+}
+.list-item {
+    list-style: none;
+}
+.link {
+    text-decoration: none;
+    color: white;
+}

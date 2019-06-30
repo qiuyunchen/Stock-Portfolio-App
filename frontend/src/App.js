@@ -1,6 +1,8 @@
+// Frameworks
 import React, {Component} from 'react';
 import { HashRouter, Route} from 'react-router-dom';
 import firebase from './firebase';
+import './App.css';
 
 // Containers & Components
 import Login from './components/login';
@@ -40,17 +42,26 @@ export default class App extends Component {
       return (
         <HashRouter>
           <Route path='/' component={ PublicHeader } />
-          <Route path='/login' exact component={ Login } />
-          <Route path='/signup' exact component={ Signup } />
+
+          <div className='body'>
+            <Route path='/' exact component={ Login } />
+            <Route path='/signup' exact component={ Signup } />
+          </div>
+
         </HashRouter>
       );
+
     } else {
-      return(
+      return (
         <HashRouter>
           <Route path='/' component={ PrivateHeader } />
-          <Route path='/logout' exact component={ Logout } />
-          <Route path='/portfolio' exact component={ Portfolio } />
-          <Route path='/transactions' exact component={ Transactions } />
+
+          <div className='body'>
+            <Route path='/logout' exact component={ Logout } />
+            <Route path='/portfolio' exact component={ Portfolio } />
+            <Route path='/transactions' exact component={ Transactions } />
+          </div>
+
         </HashRouter>
       );
     }
