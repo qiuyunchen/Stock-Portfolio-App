@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from '../firebase';
+import Axios from 'axios';
 import './styling/signup.css';
 
 
@@ -18,8 +19,23 @@ export default class Signup extends React.Component {
     handleSubmit = e =>{
         e.preventDefault();
         const {name, email, password, error} = this.state;
+        const {handleNewUser} = this.props;
 
-        console.log('clicked sign up!');
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(res =>{
+                const {uid} = res.user;
+                const user = {name, email, uid};
+                console.log(user);
+                return Axios.post('http://localhost:5555/user', user)
+            })
+            .then(res =>{
+                const user = res.data.created;
+                handleNewUser(user); // updates global state with user
+                // which automatically redirects to private portfolio page
+            })
+            .catch(err =>{
+                console.log(err.toString());
+            })
     }
 
     render(){
@@ -59,7 +75,7 @@ export default class Signup extends React.Component {
                 type="submit"
                 className='button' 
                 onClick={this.handleSubmit}>
-                Sign Up
+                Create Account
             </button>
         </form>
 

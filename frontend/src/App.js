@@ -1,5 +1,6 @@
 // Frameworks
 import React, {Component} from 'react';
+import Axios from 'axios';
 import { HashRouter, Route} from 'react-router-dom';
 import {AuthContext} from './contexts';
 import firebase from './firebase';
@@ -27,11 +28,16 @@ export default class App extends Component {
   componentDidMount(){
     this.unsubscribe = firebase.auth().onAuthStateChanged( user =>{
       if(user) {
-        console.log(user);
+        Axios.get(`http://localhost:5555/user/email/${user.email}`)
+          .then(res =>{
+            this.setState({user: res.data})
+          })
+          .catch(err =>{
+            console.log(err.toString())
+          })
         // get email, auth-token from firebase
         // use auth-token to verify user identity via middleware
         // get user info from db
-        // this.setState({user});
       }
     })
   }
