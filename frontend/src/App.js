@@ -1,6 +1,7 @@
 // Frameworks
 import React, {Component} from 'react';
 import { HashRouter, Route} from 'react-router-dom';
+import {AuthContext} from './contexts';
 import firebase from './firebase';
 import './App.css';
 
@@ -17,6 +18,10 @@ import Transactions from './components/transactions';
 export default class App extends Component {
   state = {
     user: null,
+  }
+
+  handleNewUser = (user) =>{
+    this.setState({user});
   }
 
   componentDidMount(){
@@ -41,11 +46,14 @@ export default class App extends Component {
     if(!user){
       return (
         <HashRouter>
+
           <Route path='/' component={ PublicHeader } />
 
           <div className='body'>
-            <Route path='/' exact component={ Login } />
-            <Route path='/signup' exact component={ Signup } />
+            <Route path='/' exact component={ Login } />   
+            <Route path='/signup' exact 
+              render={ props => <Signup handleNewUser={this.handleNewUser}/> } 
+              />
           </div>
 
         </HashRouter>
@@ -54,6 +62,8 @@ export default class App extends Component {
     } else {
       return (
         <HashRouter>
+        <AuthContext.Provider value={user}>
+
           <Route path='/' component={ PrivateHeader } />
 
           <div className='body'>
@@ -62,6 +72,7 @@ export default class App extends Component {
             <Route path='/transactions' exact component={ Transactions } />
           </div>
 
+        </AuthContext.Provider>
         </HashRouter>
       );
     }
