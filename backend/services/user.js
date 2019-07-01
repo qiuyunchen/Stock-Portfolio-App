@@ -2,15 +2,15 @@ const db = require('./dbConnect');
 const UserService = {};
 module.exports = UserService;
 
-UserService.create = ({name, email, cash}) =>{
+UserService.create = ({name, email, cash, uid}) =>{
     const sql = `
         INSERT INTO users 
-        (name, email, cash) 
+        (name, email, cash, uid) 
         VALUES
-        ($[name], $[email], $[cash])
+        ($[name], $[email], $[cash], $[uid])
         RETURNING *;
     `;
-    return db.one(sql, {name, email, cash});
+    return db.one(sql, {name, email, cash, uid});
 }
 
 UserService.getUserByID = (id) =>{

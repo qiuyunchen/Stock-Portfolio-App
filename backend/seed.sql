@@ -7,7 +7,8 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
-    cash NUMERIC NOT NULL
+    cash NUMERIC NOT NULL,
+    uid VARCHAR NOT NULL
 );
 
 CREATE TABLE transactions (

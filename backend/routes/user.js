@@ -5,8 +5,8 @@ module.exports = userRouter;
 
 // Create user
 userRouter.post('/', (req, res) => {
-  const { name, email } = req.body;
-  const user = { name, email, cash: 5000};
+  const { name, email, uid} = req.body;
+  const user = { name, email, uid, cash: 5000};
 
   UserService.create(user)
     .then(user => {
