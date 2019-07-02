@@ -38,6 +38,8 @@ export default class App extends Component {
         // get email, auth-token from firebase
         // use auth-token to verify user identity via middleware
         // get user info from db
+      } else {
+        this.setState({user: null});
       }
     })
   }
@@ -73,9 +75,9 @@ export default class App extends Component {
           <Route path='/' component={ PrivateHeader } />
 
           <div className='body'>
-            <Route path='/logout' exact component={ Logout } />
-            <Route path='/portfolio' exact component={ Portfolio } />
+            <Route path='/' exact component={ Portfolio } />
             <Route path='/transactions' exact component={ Transactions } />
+            <Route path='/logout' exact component={ Logout } />
           </div>
 
         </AuthContext.Provider>

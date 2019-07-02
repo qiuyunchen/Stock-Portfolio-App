@@ -30,8 +30,10 @@ export default class Signup extends React.Component {
             })
             .then(res =>{
                 const user = res.data.created;
-                handleNewUser(user); // updates global state with user
+
+                // updates global state with user
                 // which automatically redirects to private portfolio page
+                handleNewUser(user);
             })
             .catch(err =>{
                 console.log(err.toString());

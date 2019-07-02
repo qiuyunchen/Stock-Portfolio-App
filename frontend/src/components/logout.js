@@ -1,7 +1,9 @@
 import React from 'react';
+import {Redirect, withRouter} from 'react-router-dom';
 import firebase from '../firebase';
 
 export default (props) =>{
     firebase.auth().signOut();
-    return <div>log out</div>
+    // props.history.push('/');
+    return <><Redirect to='/' /></>
 }
