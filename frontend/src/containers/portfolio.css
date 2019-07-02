@@ -1,0 +1,11 @@
+.portfolio-container {
+    display: flex;
+}
+.stock-list-container {
+    width: 50%;
+    background-color: aquamarine;
+}
+.stock-purchase-container {
+    width: 50%;
+    background-color: pink;
+}

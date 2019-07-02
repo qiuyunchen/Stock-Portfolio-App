@@ -1,5 +1,9 @@
 import React from 'react';
-import firebase from '../firebase';
+import { AuthContext } from '../contexts';
+import StocksOwned from '../components/ownstock';
+import StockPurchase from '../components/buystock';
+import './portfolio.css';
+
 
 export default class Portfolio extends React.Component {
     state = {
@@ -7,6 +11,26 @@ export default class Portfolio extends React.Component {
     }
 
     render(){
-        return <div>portfolio page</div>
+
+        return (
+            <AuthContext.Consumer>
+                {user =>{
+                    return <>
+                        <h1>Portfolio ( ${user.cash} )</h1>
+                        <div className='portfolio-container'>
+
+                            <div className='stock-list-container'>
+                                <StocksOwned />
+                            </div>
+
+                            <div className='stock-purchase-container'>
+                                <StockPurchase />
+                            </div>
+
+                        </div>
+                    </>
+                }}
+            </AuthContext.Consumer>
+        );
     }
 }
