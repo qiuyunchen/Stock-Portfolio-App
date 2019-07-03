@@ -28,6 +28,7 @@ export default class App extends Component {
   componentDidMount(){
     this.unsubscribe = firebase.auth().onAuthStateChanged( user =>{
       if(user) {
+        console.log(user);
         Axios.get(`http://localhost:5555/user/email/${user.email}`)
           .then(res =>{
             this.setState({user: res.data})
@@ -59,8 +60,8 @@ export default class App extends Component {
 
           <div className='body'>
             <Route path='/' exact component={ Login } />   
-            <Route path='/signup' exact 
-              render={ props => <Signup handleNewUser={this.handleNewUser}/> } 
+            <Route path='/signup' exact
+              render={ props => <Signup handleNewUser={this.handleNewUser} props={props} /> } 
               />
           </div>
 

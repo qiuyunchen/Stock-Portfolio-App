@@ -18,6 +18,8 @@ export default class Signup extends React.Component {
 
     handleSubmit = e =>{
         e.preventDefault();
+        this.props.props.history.push('/');
+
         const {name, email, password, error} = this.state;
         const {handleNewUser} = this.props;
 
@@ -25,7 +27,6 @@ export default class Signup extends React.Component {
             .then(res =>{
                 const {uid} = res.user;
                 const user = {name, email, uid};
-                console.log(user);
                 return Axios.post('http://localhost:5555/user', user)
             })
             .then(res =>{
