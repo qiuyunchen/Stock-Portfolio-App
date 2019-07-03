@@ -47,7 +47,7 @@ export default class Signup extends React.Component {
         
         <form className='signup-login-form'>
             <h1 className='full-row text-center white'>
-                Ready for your next financial milestone?
+                Ready for your next financial move?
             </h1>
 
             <input 
