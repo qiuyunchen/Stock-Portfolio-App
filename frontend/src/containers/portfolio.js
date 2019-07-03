@@ -20,11 +20,11 @@ export default class Portfolio extends React.Component {
                         <div className='portfolio-container'>
 
                             <div className='stock-list-container'>
-                                <StocksOwned />
+                                <StocksOwned user={user} />
                             </div>
 
                             <div className='stock-purchase-container'>
-                                <StockPurchase />
+                                <StockPurchase user={user} />
                             </div>
 
                         </div>

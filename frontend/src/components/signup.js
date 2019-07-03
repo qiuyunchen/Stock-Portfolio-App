@@ -1,7 +1,6 @@
 import React from 'react';
 import firebase from '../firebase';
 import Axios from 'axios';
-import './styling/signup.css';
 
 
 export default class Signup extends React.Component {
