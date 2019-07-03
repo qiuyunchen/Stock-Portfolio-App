@@ -4,8 +4,13 @@
 .stock-list-container {
     width: 50%;
     background-color: aquamarine;
+    border-right: 3px solid black;
+    display: flex;
+    justify-content: center;
 }
 .stock-purchase-container {
     width: 50%;
     background-color: pink;
+    display: flex;
+    justify-content: center;
 }

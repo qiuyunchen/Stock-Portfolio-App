@@ -17,10 +17,9 @@ export default class Signup extends React.Component {
 
     handleSubmit = e =>{
         e.preventDefault();
-        this.props.props.history.push('/');
 
         const {name, email, password, error} = this.state;
-        const {handleNewUser} = this.props;
+        const {handleNewUser, props} = this.props;
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(res =>{
@@ -32,8 +31,8 @@ export default class Signup extends React.Component {
                 const user = res.data.created;
 
                 // updates global state with user
-                // which automatically redirects to private portfolio page
                 handleNewUser(user);
+                props.history.push('/');
             })
             .catch(err =>{
                 console.log(err.toString());
@@ -46,7 +45,7 @@ export default class Signup extends React.Component {
         return (<>
         
         <form className='signup-login-form'>
-            <h1 className='full-row text-center white'>
+            <h1 className='full-row text-center white' style={{fontSize:'18pt',marginBottom:'25px',fontWeight:'500'}}>
                 Ready for your next financial move?
             </h1>
 
