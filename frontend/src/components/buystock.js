@@ -1,24 +1,86 @@
 import React from 'react';
+import Axios from 'axios';
 import './styling/buystock.css';
 
 export default class StockPurchase extends React.Component {
     state = {
         ticker: '',
         shares: null,
+        error: '',
+    }
+
+    handleInput = e =>{
+        let value = e.target.value;
+        if(e.target.name === 'ticker') value = value.toUpperCase();
+        this.setState({[e.target.name]: value});
     }
 
     handleSubmit = e =>{
         e.preventDefault();
-        
+        const {ticker, shares, error} = this.state;
+        const {id, name, email, cash, uid} = this.props.user;
+        const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
+        const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
+        // `https://cloud.iexapis.com/stable/data-points/${ticker}/QUOTE-LATESTPRICE?token=${pubToken}`
+        const openPriceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/ohlc?token=${pubToken}`;
+        const statsUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/stats?token=${pubToken}`;
+
+        if(!ticker || !shares){
+            this.setState({error: 'Please fill in all fields to purchase stock.'})
+        } else { 
+            // do axios call to ensure valid ticker & get current price
+            // (price of ticker) * (qty) must be <= cash
+            Axios.get(priceUrl)
+                .then(res =>{
+                    const price = res.data;
+                    const totalCost = price * shares;
+                    // Error: not enough cash to make purchase
+                    if (totalCost > this.props.user.cash){
+                        this.setState({
+                            error: `${shares} shares of ${ticker} stock @$${price} costs you $${totalCost}. You do not have enough cash.`,
+                        })
+                    } else {
+                        /* 
+                            If I want to be fancy, inform user of current stock price
+                            let user confirm purchase or cancel purchase. 
+                        */
+                        /* Everything passes
+                            1. check if user already possess stock
+                                YES: update stock shares by id {user_id, ticker, shares}
+                                NO: post stock {user_id, ticker, shares}
+                            2. post transaction {user_id, ticker, shares, price}
+                            3. update user by id {name, email, *cash, uid}
+                            4. refresh render by doing a get request
+                        */
+                        const postStock = Axios.post(`http://localhost:5555/stock`, {user_id: id, ticker, shares});
+                        const postTransaction = Axios.post(`http://localhost:5555/transaction`, {user_id: id, ticker, shares, price});
+                        const updateUserCash = Axios.put(`http://localhost:5555/user/${id}`, {name, email, uid, cash: cash-totalCost});
+                        return Promise.all([postStock, postTransaction, updateUserCash])
+                    }
+                })
+                .then(([stockRes, transactionRes, userRes]) =>{
+                    //
+                    // let user know transaction went through
+
+                    this.setState({})
+                })
+                .catch(err =>{
+                    if(err.toString() === 'Error: Request failed with status code 404'){
+                        this.setState({error: 'Ticker is invalid. Try again.', ticker: '', shares: ''});
+                    }
+                })
+
+        }
     }
 
     render(){
-        const {ticker, shares} = this.state;
+        const {ticker, shares, error} = this.state;
         const {user} = this.props;
-        console.log(this.props)
 
         return (
             <form className='purchase-form'>
+                <div className="alert alert-danger"> {error} </div>
+
                 <h1 className='full-row text-center'>Cash - ${user.cash}</h1>
 
                 <input 
