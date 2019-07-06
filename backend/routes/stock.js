@@ -32,8 +32,9 @@ stockRouter.get('/user/:id', (req, res) => {
 // Update stock by id
 stockRouter.put('/:id', (req, res) => {
     const { id } = req.params;
+    const {user_id, ticker, shares} = req.body;
 
-    StockService.updateStockByStockID(id)
+    StockService.updateStockByStockID(id, {user_id, ticker, shares})
       .then(stock => {
           res.json({ updated: stock });
       })
