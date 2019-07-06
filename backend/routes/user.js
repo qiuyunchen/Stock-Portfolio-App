@@ -44,8 +44,8 @@ userRouter.get('/email/:email', (req, res) => {
 // Update user by id
 userRouter.put('/:id', (req, res) => {
   const { id } = req.params;
-  const { name, email, cash } = req.body;
-  UserService.updateUserByID(id, {name, email, cash})
+  const { name, email, cash, uid } = req.body;
+  UserService.updateUserByID(id, {name, email, cash, uid})
     .then(user => {
         res.json({ updated: user });
     })

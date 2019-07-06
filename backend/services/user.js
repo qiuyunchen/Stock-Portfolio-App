@@ -31,18 +31,19 @@ UserService.getUserByEmail = (email) =>{
     return db.one(sql, {email});
 }
 
-UserService.updateUserByID = (id, {name, email, cash}) =>{
+UserService.updateUserByID = (id, {name, email, cash, uid}) =>{
     const sql = `
         UPDATE users
         SET
             name = $[name],
             email = $[email],
-            cash = $[cash]
+            cash = $[cash],
+            uid = $[uid]
         WHERE
             id = $[id]
         RETURNING *;
     `;
-    return db.one(sql, {id, name, email, cash});
+    return db.one(sql, {id, name, email, cash, uid});
 }
 
 UserService.deleteUserByID = (id) =>{
