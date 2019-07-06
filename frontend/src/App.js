@@ -50,6 +50,7 @@ export default class App extends Component {
 
   render(){
     const {user} = this.state;
+    const handleNewUser = this.handleNewUser;
 
     if(!user){
       return (
@@ -60,7 +61,7 @@ export default class App extends Component {
           <div className='body'>
             <Route path='/' exact component={ Login } />   
             <Route path='/signup' exact
-              render={ props => <Signup handleNewUser={this.handleNewUser} props={props} /> } 
+              render={ props => <Signup {...{handleNewUser, props}} /> } 
               />
           </div>
 
@@ -75,7 +76,9 @@ export default class App extends Component {
           <Route path='/' component={ PrivateHeader } />
 
           <div className='body'>
-            <Route path='/' exact component={ Portfolio } />
+            <Route path='/' exact
+              render={ props => <Portfolio {...{props, user}}/> } 
+              />
             <Route path='/transactions' exact component={ Transactions } />
             <Route path='/logout' exact component={ Logout } />
           </div>

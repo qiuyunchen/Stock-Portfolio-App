@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 import { AuthContext } from '../contexts';
 import StocksOwned from '../components/ownstock';
 import StockPurchase from '../components/buystock';
@@ -7,30 +8,44 @@ import './portfolio.css';
 
 export default class Portfolio extends React.Component {
     state = {
+        user: {},
+        stocks: [],
+    }
 
+    refreshState = (user = this.props.user) =>{
+        console.log('portfolio user...', user);
+        Axios.get(`http://localhost:5555/stock/user/${user.id}`)
+            .then(res =>{
+                this.setState({user, stocks: res.data});
+            })
+            .catch(err =>{
+                console.log('Get stocks by user id error...', err.toString())
+            })
+    }
+
+    componentDidMount(){
+        this.refreshState();
     }
 
     render(){
-
+        const {user, stocks} = this.state;
+        const {props} = this.props;
+        
         return (
-            <AuthContext.Consumer>
-                {user =>{
-                    return <>
-                        <h1>Portfolio ( ${user.cash} )</h1>
-                        <div className='portfolio-container'>
+            <>
+                <h1>Portfolio ( ${user.cash} )</h1>
+                <div className='portfolio-container'>
 
-                            <div className='stock-list-container'>
-                                <StocksOwned user={user} />
-                            </div>
+                    <div className='stock-list-container'>
+                        <StocksOwned {...{user, stocks, props}}/>
+                    </div>
 
-                            <div className='stock-purchase-container'>
-                                <StockPurchase user={user} />
-                            </div>
+                    <div className='stock-purchase-container'>
+                        <StockPurchase {...{user, stocks, props}} refreshState={this.refreshState}/>
+                    </div>
 
-                        </div>
-                    </>
-                }}
-            </AuthContext.Consumer>
+                </div>
+            </>       
         );
     }
 }

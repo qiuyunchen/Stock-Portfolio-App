@@ -17,8 +17,10 @@ export default class StockPurchase extends React.Component {
 
     handleSubmit = e =>{
         e.preventDefault();
+        const {user, stocks, props, refreshState} = this.props;
+        const {id, name, email, cash, uid} = user;
         const {ticker, shares, error} = this.state;
-        const {id, name, email, cash, uid} = this.props.user;
+
         const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
         const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
         // `https://cloud.iexapis.com/stable/data-points/${ticker}/QUOTE-LATESTPRICE?token=${pubToken}`
@@ -34,10 +36,12 @@ export default class StockPurchase extends React.Component {
                 .then(res =>{
                     const price = res.data;
                     const totalCost = price * shares;
+                    const leftoverCash = cash - totalCost;
                     // Error: not enough cash to make purchase
-                    if (totalCost > this.props.user.cash){
+                    if (leftoverCash < 0){
+                        const s = shares > 1 ? 's' : '';
                         this.setState({
-                            error: `${shares} shares of ${ticker} stock @$${price} costs you $${totalCost}. You do not have enough cash.`,
+                            error: `${shares} share${s} of ${ticker} stock @$${price} costs you $${totalCost.toFixed(2)}. You do not have enough cash.`,
                         })
                     } else {
                         /* 
@@ -52,17 +56,26 @@ export default class StockPurchase extends React.Component {
                             3. update user by id {name, email, *cash, uid}
                             4. refresh render by doing a get request
                         */
-                        const postStock = Axios.post(`http://localhost:5555/stock`, {user_id: id, ticker, shares});
+                        
                         const postTransaction = Axios.post(`http://localhost:5555/transaction`, {user_id: id, ticker, shares, price});
-                        const updateUserCash = Axios.put(`http://localhost:5555/user/${id}`, {name, email, uid, cash: cash-totalCost});
-                        return Promise.all([postStock, postTransaction, updateUserCash])
+                        const updateUserCash = Axios.put(`http://localhost:5555/user/${id}`, {name, email, uid, cash: leftoverCash.toFixed(2)});
+
+                        // Check if user already possess stock to be purchased
+                        const match = stocks.filter(stock => stock.ticker === ticker);
+                        if(match.length){
+                            const newShares = match[0].shares + parseInt(shares);
+                            const updateStock = Axios.put(`http://localhost:5555/stock/${match[0].id}`, {user_id: id, ticker, shares: newShares})
+                            return Promise.all([updateStock, postTransaction, updateUserCash])
+                        } else {
+                            const postStock = Axios.post(`http://localhost:5555/stock`, {user_id: id, ticker, shares});
+                            return Promise.all([postStock, postTransaction, updateUserCash])
+                        }
                     }
                 })
                 .then(([stockRes, transactionRes, userRes]) =>{
-                    //
+                    const user = userRes.data.updated;
                     // let user know transaction went through
-
-                    this.setState({})
+                    refreshState(user);
                 })
                 .catch(err =>{
                     if(err.toString() === 'Error: Request failed with status code 404'){
@@ -95,6 +108,7 @@ export default class StockPurchase extends React.Component {
                     placeholder='Qty'
                     type='number'
                     step='1'
+                    min='1'
                     className='full-row space input' 
                     value={shares}
                     onChange={this.handleInput}></input>
