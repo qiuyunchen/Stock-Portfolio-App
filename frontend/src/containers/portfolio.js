@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { AuthContext } from '../contexts';
+import PortfolioValue from '../components/portfolio_value';
 import StocksOwned from '../components/ownstock';
 import StockPurchase from '../components/buystock';
 import './portfolio.css';
@@ -30,10 +30,11 @@ export default class Portfolio extends React.Component {
     render(){
         const {user, stocks} = this.state;
         const {props} = this.props;
+        console.log(stocks)
         
         return (
             <>
-                <h1>Portfolio ( <b>${stocks.length? user.cash : ' - '}</b> )</h1>
+                <PortfolioValue {...{user, stocks, props}}/>
                 <div className='portfolio-container'>
 
                     <div className='stock-list-container'>
