@@ -23,7 +23,6 @@ export default class StockPurchase extends React.Component {
         const {ticker, shares, error, success} = this.state;
         const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
         const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
-        const openPriceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/ohlc?token=${pubToken}`;
 
         if(!ticker){
             this.setState({error: 'Please enter the stock symbol.', success:''})

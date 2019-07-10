@@ -4,3 +4,8 @@
     display: flex;
     align-items: center;
 }
+.stock-list-container-inner {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: aquamarine;
+}
