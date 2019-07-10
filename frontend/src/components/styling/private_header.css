@@ -6,6 +6,7 @@
 }
 .private-nav-container {
     color: white;
+    font-family: 'Times New Roman', Times, serif;
     width: 1000px;
     display: flex;
     justify-content: space-between;
@@ -21,5 +22,6 @@
     flex-wrap: wrap;
 }
 .pipe {
-    color: #00F2C6;
+    color: #85C1E9;
+    font-weight: 800;
 }

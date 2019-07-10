@@ -77,9 +77,11 @@ export default class App extends Component {
 
           <div className='body'>
             <Route path='/' exact
-              render={ props => <Portfolio {...{props, user}}/> } 
+              render={ props => <Portfolio {...{props, user}} /> } 
               />
-            <Route path='/transactions' exact component={ Transactions } />
+            <Route path='/transactions' exact
+              render={ props => <Transactions {...{props, user}} /> }
+              />
             <Route path='/logout' exact component={ Logout } />
           </div>
 

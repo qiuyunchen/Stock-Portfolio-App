@@ -5,6 +5,7 @@
 }
 .nav-container{
     color: white;
+    font-family: 'Times New Roman', Times, serif;
     display: flex;
     width: 1000px;
     padding: 20px 40px;

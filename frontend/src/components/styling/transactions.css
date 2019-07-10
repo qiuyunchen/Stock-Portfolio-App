@@ -1,0 +1,21 @@
+.transaction-title {
+    font-family: 'Times New Roman', Times, serif
+}
+.transactions-container {
+    background-color: #D6EAF8;
+    color: #26508C;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    font-size: 18pt;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.transaction-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.emphasize-text {
+    color: #3498DB;
+    font-weight: 500;
+}
