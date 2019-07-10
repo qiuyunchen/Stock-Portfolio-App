@@ -1,7 +1,30 @@
 .purchase-form {
     width: 80%;
-    border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     padding: 30px;
+}
+.cash-remain {
+    color: #2f4f4f;
+}
+b {
+    color: green;
+}
+.error-alert {
+    width: 100%;
+    background-color: rgba(250,218,237,0.4);
+    color: #b22222;
+    text-align: center;
+    font-size: 17pt;
+    border: 1px solid #b22222;
+    padding: 10px;
+}
+.success-alert {
+    width: 100%;
+    background-color: rgba(196,255,196,0.4);
+    color: green;
+    text-align: center;
+    font-size: 17pt;
+    padding: 12px 0px;
+    border: 1px solid lightgreen;
 }

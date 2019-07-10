@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import './styling/ownstock.css';
 
 export default class StocksOwned extends React.Component {
     state = {
@@ -10,7 +10,7 @@ export default class StocksOwned extends React.Component {
         const {user, stocks} = this.props;
         
         if (!stocks.length){
-            return <div>You don't own any stocks yet</div>
+            return <div className='no-stock-msg'>No stocks in your portfolio yet.</div>
         } else {
             return <>
                 {stocks.map(s =>{

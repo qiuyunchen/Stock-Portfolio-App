@@ -1,0 +1,6 @@
+.no-stock-msg {
+    color: #3498DB;
+    font-size: 18pt;
+    display: flex;
+    align-items: center;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import Axios from 'axios';
-import 'font-awesome/css/font-awesome.min.css';
 import './styling/transactions.css';
 
 export default class Transactions extends React.Component {

@@ -33,7 +33,7 @@ export default class Portfolio extends React.Component {
         
         return (
             <>
-                <h1>Portfolio ( ${user.cash} )</h1>
+                <h1>Portfolio ( <b>${stocks.length? user.cash : ' - '}</b> )</h1>
                 <div className='portfolio-container'>
 
                     <div className='stock-list-container'>
