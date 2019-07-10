@@ -25,10 +25,10 @@ export default (props) =>{
                                     <li className='list-item'>Transactions</li>
                                 </Link>
                                 
-                                <li className='list-item pipe'>|</li>
-                                
                                 <Link to='/logout' className='link'>
-                                    <li className='list-item'>Log Out</li>
+                                    <li className='list-item'>
+                                        <i className='fa fa-power-off' id='logout' title='Log Out'></i>
+                                    </li>
                                 </Link>
                             </ul>
                         </div>
