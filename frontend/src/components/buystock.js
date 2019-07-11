@@ -10,6 +10,10 @@ export default class StockPurchase extends React.Component {
         success: '',
     }
 
+    componentDidMount(){
+        
+    }
+
     handleInput = e =>{
         let value = e.target.value;
         if(e.target.name === 'ticker') value = value.toUpperCase();
@@ -77,7 +81,7 @@ export default class StockPurchase extends React.Component {
                 // Error: invalid ticker
                 .catch(err =>{
                     if(err.toString() === 'Error: Request failed with status code 404'){
-                        this.setState({error: 'Ticker is invalid.', ticker: '', shares: ''});
+                        this.setState({error: 'Ticker is invalid.', success: '', ticker: '', shares: ''});
                     }
                 })
         }

@@ -1,4 +1,11 @@
 .stock-row {
     width: 100%;
-    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px 15px;
+    font-size: 20pt;
+    /* border-bottom: 1px solid #3498DB; */
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 10px;
 }

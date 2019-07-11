@@ -1,11 +1,11 @@
 .no-stock-msg {
     color: #3498DB;
     font-size: 18pt;
-    display: flex;
-    align-items: center;
+    text-align: center;
+    padding: 40px;
 }
 .stock-list-container-inner {
     display: flex;
     flex-wrap: wrap;
-    background-color: aquamarine;
+    padding: 20px;
 }

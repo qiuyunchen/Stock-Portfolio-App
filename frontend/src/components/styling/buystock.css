@@ -13,7 +13,7 @@ b {
 .error-alert {
     width: 100%;
     background-color: rgba(250,218,237,0.4);
-    color: #b22222;
+    color: red;
     text-align: center;
     font-size: 17pt;
     border: 1px solid #b22222;

@@ -48,8 +48,9 @@ export default class EachStock extends React.Component {
     render(){
         const {ticker, shares, value, color} = this.state;
 
-        return <div className='stock-row'>
-            {ticker + ' - ' + shares + ' shares'}
+        return <div className='stock-row' style={{color:color}}>
+            <div>{`${ticker} - ${shares} shares`}</div>
+            <div>{`$${value}`}</div>
         </div>
     }
 }
