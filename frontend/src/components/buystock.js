@@ -5,13 +5,9 @@ import './styling/buystock.css';
 export default class StockPurchase extends React.Component {
     state = {
         ticker: '',
-        shares: null,
+        shares: 0,
         error: '',
         success: '',
-    }
-
-    componentDidMount(){
-        
     }
 
     handleInput = e =>{
@@ -22,12 +18,11 @@ export default class StockPurchase extends React.Component {
 
     handleSubmit = e =>{
         e.preventDefault();
-        const {user, stocks, props} = this.props;
+        const {user, stocks} = this.props;
         const {id, name, email, cash, uid} = user;
-        const {ticker, shares, error, success} = this.state;
+        const {ticker, shares} = this.state;
         const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
         const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
-
         if(!ticker){
             this.setState({error: 'Please enter the stock symbol.', success:''})
         } else if (!shares){
@@ -38,7 +33,7 @@ export default class StockPurchase extends React.Component {
                 .then(res =>{
                     const price = res.data;
                     const totalCost = (price * shares).toFixed(2);
-                    const leftoverCash = cash - totalCost;
+                    const leftoverCash = (cash - totalCost).toFixed(2);
                     // Error: not enough cash to make purchase
                     if (leftoverCash < 0){
                         const s = shares > 1 ? 's' : '';
@@ -48,7 +43,7 @@ export default class StockPurchase extends React.Component {
                             success: '',
                         })
                     } else {
-                        /* 
+                        /*  
                             Everything passes
                             1. check if user already own shares of this stock
                                 YES: update stock shares by id {user_id, ticker, shares}
@@ -58,9 +53,9 @@ export default class StockPurchase extends React.Component {
                             4. refresh render by doing a get request
                         */
                         const postTransaction = Axios.post(`http://localhost:5555/transaction`, {user_id: id, ticker, shares, price});
-                        const updateUserCash = Axios.put(`http://localhost:5555/user/${id}`, {name, email, uid, cash: leftoverCash.toFixed(2)});
+                        const updateUserCash = Axios.put(`http://localhost:5555/user/${id}`, {name, email, uid, cash: leftoverCash});
                         const match = stocks.filter(stock => stock.ticker === ticker);
-                        if(match.length){
+                        if (match.length){
                             const newShares = match[0].shares + parseInt(shares);
                             const updateStock = Axios.put(`http://localhost:5555/stock/${match[0].id}`, {user_id: id, ticker, shares: newShares})
                             return Promise.all([updateStock, postTransaction, updateUserCash])

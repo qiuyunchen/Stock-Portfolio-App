@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import firebase from '../firebase';
 import './styling/public_header.css';
 
 export default (props) =>{

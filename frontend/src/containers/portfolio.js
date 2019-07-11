@@ -12,7 +12,7 @@ export default class Portfolio extends React.Component {
         stocks: [],
     }
 
-    refreshState = (user = this.props.user) =>{
+    refreshState = (user) =>{
         Axios.get(`http://localhost:5555/stock/user/${user.id}`)
             .then(res =>{
                 this.setState({user, stocks: res.data});
@@ -23,7 +23,12 @@ export default class Portfolio extends React.Component {
     }
 
     componentDidMount(){
-        this.refreshState();
+        Axios.get(`http://localhost:5555/user/id/${this.props.user.id}`)
+            .then(res =>{
+                const user = res.data;
+                this.refreshState(user);
+            })
+            .catch(err => console.log(err.toString()) )
     }
 
     render(){
@@ -40,7 +45,7 @@ export default class Portfolio extends React.Component {
                     </div>
 
                     <div className='stock-purchase-container'>
-                        <StockPurchase {...{user, props}} refreshState={this.refreshState}/>
+                        <StockPurchase {...{user, stocks, props}} refreshState={this.refreshState}/>
                     </div>
 
                 </div>
