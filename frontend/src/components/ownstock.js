@@ -9,8 +9,8 @@ export default (props) => {
         return <div className='no-stock-msg'>No stocks in your portfolio yet.</div>
     } else {
         return <div className='stock-list-container-inner'>
-            {stocks.map(s =>{
-                return <EachStock stock={s} />
+            {stocks.map((s,i) =>{
+                return <EachStock stock={s} key={i}/>
             })}
         </div>
     }

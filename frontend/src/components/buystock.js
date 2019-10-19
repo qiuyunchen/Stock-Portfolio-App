@@ -21,8 +21,14 @@ export default class StockPurchase extends React.Component {
         const {user, stocks} = this.props;
         const {id, name, email, cash, uid} = user;
         const {ticker, shares} = this.state;
-        const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
-        const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
+
+        // The requested data is not available to free tier accounts. Please upgrade for access to this data.
+        // const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
+        // const priceUrl = `https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`;
+
+        const APIKey = 'OjE0N2JkZjlmYWMxYmI4YzMzZGUxN2RjMjkxMDY2OGI2'
+        const priceUrl = `https://api-v2.intrinio.com/securities/${ticker}/prices/realtime?api_key=${APIKey}`
+        
         if(!ticker){
             this.setState({error: 'Please enter the stock symbol.', success:''})
         } else if (!shares){
@@ -31,7 +37,7 @@ export default class StockPurchase extends React.Component {
             // Get current stock price
             Axios.get(priceUrl)
                 .then(res =>{
-                    const price = res.data;
+                    const price = res.data.last_price;
                     const totalCost = (price * shares).toFixed(2);
                     const leftoverCash = (cash - totalCost).toFixed(2);
                     // Error: not enough cash to make purchase

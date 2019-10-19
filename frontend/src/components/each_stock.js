@@ -22,17 +22,23 @@ export default class EachStock extends React.Component {
 
     getStockPerformance = (stock) =>{
         const {ticker, shares} = stock;
-        const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
-        const getCurrPrice = Axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`);
-        const getOpenPrice = Axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/ohlc?token=${pubToken}`);
+        // const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
+        // const getCurrPrice = Axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/price?token=${pubToken}`);
+        // const getOpenPrice = Axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/ohlc?token=${pubToken}`);
+
+        const APIKey = 'OjE0N2JkZjlmYWMxYmI4YzMzZGUxN2RjMjkxMDY2OGI2'
+        const getPricesUrl = `https://api-v2.intrinio.com/securities/${ticker}/prices/realtime?api_key=${APIKey}`
         
-        Promise.all([getOpenPrice,getCurrPrice])
-            .then( ([res1, res2]) =>{
-                const openPrice = res1.data.open.price;
-                const currPrice = res2.data;
+        Axios.get(getPricesUrl)
+            .then( res =>{
+                const openPrice = res.data.open_price;
+                console.log(openPrice)
+                const currPrice = res.data.last_price;
                 const value = (currPrice * shares).toFixed(2);
                 let color = 'grey';
-                if(currPrice > openPrice){
+                if(!openPrice){
+                    color = 'green';
+                } else if(currPrice > openPrice){
                     color = 'green';
                 } else if(currPrice < openPrice){
                     color = 'red';

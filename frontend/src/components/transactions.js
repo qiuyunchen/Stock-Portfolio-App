@@ -46,11 +46,10 @@ export default class Transactions extends React.Component {
                             <div>
                                 <span>{`Bought (${ticker})`}</span>
                                 <span>{line}</span>
-                                <span className='emphasize-text'>{`${shares} share${s} `}</span>
-                                <span>@</span>
                                 <span className='emphasize-text'>{` $${unitPrice} `}</span>
-                                <span><i className='fa fa-long-arrow-right'></i></span>
-                                <span>{` $${total}`}</span>
+                                <span>x </span>
+                                <span className='emphasize-text'>{`${shares} share${s} `}</span>
+                                <span>{`( $${total} )`}</span>
                             </div>
                             <div>{date}</div>
                         </div>

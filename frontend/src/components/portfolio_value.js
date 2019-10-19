@@ -21,15 +21,18 @@ export default class PortfolioValue extends React.Component {
             this.setState({value: ' - '})
         } else {
             const getPricePromises = stocks.map( e =>{
-                const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
-                const priceUrl = `https://cloud.iexapis.com/stable/stock/${e.ticker}/price?token=${pubToken}`;
+                // const pubToken = 'pk_b162cbdbebdc4449bcd3dbe59b054079';
+                // const priceUrl = `https://cloud.iexapis.com/stable/stock/${e.ticker}/price?token=${pubToken}`;
+                const APIKey = 'OjE0N2JkZjlmYWMxYmI4YzMzZGUxN2RjMjkxMDY2OGI2'
+                const priceUrl = `https://api-v2.intrinio.com/securities/${e.ticker}/prices/realtime?api_key=${APIKey}`
                 const pending = Axios.get(priceUrl);
                 return pending;
             })
             Promise.all(getPricePromises)
                 .then(prices =>{
                     return prices.reduce( (acc, res, i) =>{
-                        const price = res.data;
+                        console.log(res)
+                        const price = res.data.last_price;
                         const {shares} = stocks[i];
                         const stockValue = price * shares;
                         return acc + stockValue;
